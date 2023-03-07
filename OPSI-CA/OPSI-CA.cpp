@@ -31,6 +31,8 @@
 #define n 11
 #define beta n
 #define gamma 3
+#define sigma 40
+#define lambda 128
 #define sizeW 128
 #define TimeToTest 50
 #endif//_OPSICA_H
@@ -134,6 +136,24 @@ int BinarySearch(Element array_lists[], int nBegin, int nEnd, Element target, un
 		return BinarySearch(array_lists, nBegin, nMid - 1, target, compareCount);
 	else
 		return BinarySearch(array_lists, nMid + 1, nEnd, target, compareCount);
+}
+
+Element factorial(Element num)
+{
+	Element result = 1;
+	for (Element i = 1; i <= num; ++i)
+		result *= i;
+	return result;
+}
+
+Element combination(Element a, Element b)
+{
+	return factorial(a) / (factorial(b) * factorial(a - b));
+}
+
+double Cp1p(Element a, Element b, double p)
+{
+	return (double)combination(a, b) * pow(p, b) * pow(1 - p, a - b);
 }
 
 #ifdef _DEBUG
@@ -287,6 +307,8 @@ private:
 	bool A[beta][sizeW] = { { false } };
 	Element k = NULL;
 	Element V[beta] = { NULL };
+	Element omega = NULL;
+	Element l1 = lambda << 1, l2 = sigma + (Element)log(beta * beta);
 
 public:
 	void input_Y()
@@ -351,6 +373,17 @@ public:
 	{
 		return this->V;
 	}
+	void Cp1p_omega()
+	{
+		this->omega = NULL;
+		double p = 0.5, total = 0;
+		while (total <= p)
+		{
+			total += Cp1p(n, this->omega, p);
+			++this->omega;
+		}
+		return;
+	}
 	size_t printSize()
 	{
 		cout << "Timeof(S) = " << timerS * baseNum << " / " << TimeToTest << " = " << timerS * baseNum / TimeToTest << " ms" << endl;
@@ -374,6 +407,7 @@ private:
 	Element Z[beta] = { NULL };
 	bool B[beta][sizeW] = { { false } };
 	Element W[beta] = { NULL };
+	Element l1 = lambda << 1, l2 = sigma + (Element)log(beta * beta);
 
 public:
 	void receive_Z(Element* Z)
@@ -479,6 +513,7 @@ void protocol()
 	/* Step 6 */
 	sub_start_time = clock();
 	S.get_V();
+	S.Cp1p_omega();
 	sub_end_time = clock();
 	timerS += (double)sub_end_time - sub_start_time;
 	sub_start_time = clock();
@@ -526,7 +561,7 @@ int main()
 	clock_t end_time = clock();
 	cout << endl;
 	cout << "/**************************************** OPSI-CA ****************************************/" << endl;
-	cout << "kBit = " << kBit << "\t\tgamma = " << gamma << "\t\tlambda = " << sizeW << endl;
+	cout << "kBit = " << kBit << "\t\tgamma = " << gamma << "\t\tlambda = " << lambda << endl;
 	cout << "beta = [2 ** " << (log2(1.27) + beta) << "]\t\tN = 2 ** " << N << "\t\tn = 2 ** " << n << endl;
 	cout << "Time: " << ((double)end_time - start_time) * baseNum << " / " << TimeToTest << " = " << ((double)end_time - start_time) * baseNum / TimeToTest << "ms" << endl;
 	cout << "sizeof(*) = " << ((R.printSize() + S.printSize() + C.printSize()) >> 5) << " KB (*)" << endl << endl;
