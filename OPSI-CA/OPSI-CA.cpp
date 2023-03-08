@@ -283,8 +283,8 @@ public:
 	size_t printSize(bool isPow)
 	{
 		cout << "Timeof(R) = " << timerR * baseNum << " / " << TimeToTest << " = " << timerR * baseNum / TimeToTest << " ms" << endl;
-		cout << "sizeof(Receiver) = " << sizeof(Receiver) * baseNum << " KB" << endl;
-		cout << "sizeof(R) = " << sizeof(this) * baseNum << " MB" << endl;
+		cout << "sizeof(Receiver) = " << sizeof(Receiver) * baseNum << (isPow ? " KB" : " B") << endl;
+		cout << "sizeof(R) = " << sizeof(this) * baseNum << (isPow ? " MB" : " KB") << endl;
 		cout << "\tsizeof(R.X) = " << (isPow ? (sizeof(Element) * baseNum) << n : sizeof(this->X) * baseNum) << " B" << endl;
 		cout << "\tsizeof(R.X_c) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->X_c) * baseNum) << " B" << endl;
 		cout << "\tsizeof(R.Z) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->Z) * baseNum) << " B (*)" << endl;
@@ -387,8 +387,8 @@ public:
 	size_t printSize(bool isPow)
 	{
 		cout << "Timeof(S) = " << timerS * baseNum << " / " << TimeToTest << " = " << timerS * baseNum / TimeToTest << " ms" << endl;
-		cout << "sizeof(Sender) = " << sizeof(Sender) << " KB" << endl;
-		cout << "sizeof(S) = " << sizeof(this) * baseNum << " MB" << endl;
+		cout << "sizeof(Sender) = " << sizeof(Sender) << (isPow ? " KB" : " B") << endl;
+		cout << "sizeof(S) = " << sizeof(this) * baseNum << (isPow ? " MB" : " KB") << endl;
 		cout << "\tsizeof(S.Y) = " << (isPow ? (sizeof(Element) * baseNum) << N : sizeof(this->Y) * baseNum) << " B" << endl;
 		cout << "\tsizeof(S.Z_pi) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->Z_pi) * baseNum) << " B (*)" << endl;
 		cout << "\tsizeof(S.I) = " << (isPow ? (sizeof(Element) * baseNum) << N : sizeof(this->I) * baseNum) << " B" << endl;
@@ -437,8 +437,8 @@ public:
 	size_t printSize(bool isPow)
 	{
 		cout << "Timeof(C) = " << timerC * baseNum << " / " << TimeToTest << " = " << timerC * baseNum / TimeToTest << " ms" << endl;
-		cout << "sizeof(Cloud) = " << sizeof(Cloud) << " KB" << endl;
-		cout << "sizeof(C) = " << sizeof(this) * baseNum << " MB" << endl;
+		cout << "sizeof(Cloud) = " << sizeof(Cloud) << (isPow ? " KB" : " B") << endl;
+		cout << "sizeof(C) = " << sizeof(this) * baseNum << (isPow ? " MB" : " KB") << endl;
 		cout << "\tsizeof(C.Z) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->Z) * baseNum) << " B (*)" << endl;
 		cout << "\tsizeof(C.B) = " << (isPow ? (sizeof(Element) * baseNum) * (beta * sizeW) : sizeof(this->B) * baseNum) << " B (*)" << endl;
 		cout << "\tsizeof(C.W) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->W) * baseNum) << " B (*)" << endl;
