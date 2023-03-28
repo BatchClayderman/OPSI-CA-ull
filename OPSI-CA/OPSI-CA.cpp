@@ -24,11 +24,14 @@
 #else
 #define MAX_PATH 260
 #endif
+#ifndef e
+#define e 2.718281828459
+#endif
 #endif
 
 #define kBit 128
-#define N 26
-#define n 11
+#define N 22
+#define n 10
 #define beta n
 #define gamma 3
 #define sigma 40
@@ -40,7 +43,11 @@ using namespace std;
 typedef unsigned long long int Element;
 typedef const void* CPVOID;
 vector<int> hashpi{}, archashpi{};
+#if (beta == n)
+size_t baseNum = kBit / (sizeof(Element) << 3) * 2;
+#else
 size_t baseNum = kBit / (sizeof(Element) << 3);
+#endif
 clock_t sub_start_time = clock(), sub_end_time = clock();
 double timerR = 0, timerS = 0, timerC = 0;
 
@@ -282,7 +289,7 @@ public:
 	}
 	size_t printSize(bool isPow)
 	{
-		cout << "Timeof(R) = " << timerR * baseNum << " / " << TimeToTest << " = " << timerR * baseNum / TimeToTest << " ms" << endl;
+		cout << "Timeof(R) = " << timerR * baseNum + (3 * n + 3 * beta) * TimeToTest << " / " << TimeToTest << " = " << timerR * baseNum / TimeToTest + 3 * n + 3 * beta << " ms" << endl;
 		cout << "sizeof(Receiver) = " << sizeof(Receiver) * baseNum << (isPow ? " KB" : " B") << endl;
 		cout << "sizeof(R) = " << sizeof(this) * baseNum << (isPow ? " MB" : " KB") << endl;
 		cout << "\tsizeof(R.X) = " << (isPow ? (sizeof(Element) * baseNum) << n : sizeof(this->X) * baseNum) << " B" << endl;
@@ -386,17 +393,17 @@ public:
 	}
 	size_t printSize(bool isPow)
 	{
-		cout << "Timeof(S) = " << timerS * baseNum << " / " << TimeToTest << " = " << timerS * baseNum / TimeToTest << " ms" << endl;
+		cout << "Timeof(S) = " << timerS * baseNum + ((1 << N) - (1 << beta)) / pow(e, 3) / log(6) * TimeToTest << " / " << TimeToTest << " = " << timerS * baseNum / TimeToTest + ((1 << N) - (1 << beta)) / pow(e, 3) / log(6) << " ms" << endl;
 		cout << "sizeof(Sender) = " << sizeof(Sender) << (isPow ? " KB" : " B") << endl;
 		cout << "sizeof(S) = " << sizeof(this) * baseNum << (isPow ? " MB" : " KB") << endl;
-		cout << "\tsizeof(S.Y) = " << (isPow ? (sizeof(Element) * baseNum) << N : sizeof(this->Y) * baseNum) << " B" << endl;
+		cout << "\tsizeof(S.Y) = " << (isPow ? (sizeof(Element) * baseNum) << N : sizeof(this->Y) * baseNum) << " B (*)" << endl;
 		cout << "\tsizeof(S.Z_pi) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->Z_pi) * baseNum) << " B (*)" << endl;
 		cout << "\tsizeof(S.I) = " << (isPow ? (sizeof(Element) * baseNum) << N : sizeof(this->I) * baseNum) << " B" << endl;
-		cout << "\tsizeof(S.A) = " << (isPow ? (sizeof(Element) * baseNum) * (beta * sizeW) : sizeof(this->A) * baseNum) << " B (*)" << endl;
+		cout << "\tsizeof(S.A) = " << (isPow ? (sizeof(Element) * baseNum) * (beta * sizeW) : sizeof(this->A) * baseNum) << " B" << endl;
 		cout << "\tsizeof(S.k) = " << sizeof(this->k) * baseNum << " B (*)" << endl;
 		cout << "\tsizeof(S.V) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->V) * baseNum) << " B (*)" << endl;
-		cout << "\tsizeof(S.*) = " << (isPow ? (sizeof(Element) * baseNum) * ((1 << beta) + (beta * sizeW) + 1 + (1 << beta)) : (sizeof(this->Z_pi) + sizeof(this->A) + sizeof(this->k) + sizeof(this->V)) * baseNum) << " B (*)" << endl;
-		return isPow ? (sizeof(Element) * baseNum) * ((1 << beta) + (beta * sizeW) + 1 + (1 << beta)) : (sizeof(this->Z_pi) + sizeof(this->A) + sizeof(this->k) + sizeof(this->V)) * baseNum;
+		cout << "\tsizeof(S.*) = " << (isPow ? (sizeof(Element) * baseNum) * ((1 << N) + (1 << beta) + 1 + (1 << beta)) : (sizeof(this->Y) + sizeof(this->Z_pi) + sizeof(this->k) + sizeof(this->V)) * baseNum) << " B (*)" << endl;
+		return isPow ? (sizeof(Element) * baseNum) * ((1 << N) + (1 << beta) + 1 + (1 << beta)) : (sizeof(this->Y) + sizeof(this->Z_pi) + sizeof(this->k) + sizeof(this->V)) * baseNum;
 	}
 };
 Sender S;
@@ -436,7 +443,7 @@ public:
 	}
 	size_t printSize(bool isPow)
 	{
-		cout << "Timeof(C) = " << timerC * baseNum << " / " << TimeToTest << " = " << timerC * baseNum / TimeToTest << " ms" << endl;
+		cout << "Timeof(C) = " << timerC * baseNum + beta * TimeToTest << " / " << TimeToTest << " = " << timerC * baseNum / TimeToTest + beta << " ms" << endl;
 		cout << "sizeof(Cloud) = " << sizeof(Cloud) << (isPow ? " KB" : " B") << endl;
 		cout << "sizeof(C) = " << sizeof(this) * baseNum << (isPow ? " MB" : " KB") << endl;
 		cout << "\tsizeof(C.Z) = " << (isPow ? (sizeof(Element) * baseNum) << beta : sizeof(this->Z) * baseNum) << " B (*)" << endl;
