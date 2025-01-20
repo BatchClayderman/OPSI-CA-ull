@@ -1,6 +1,6 @@
 # OPSI-CA
 
-This is the official simulation implementation of the OPSI-CA cryptography scheme (``PPCT: Privacy-Preserving Contact Tracing Using Concise Private Set Intersection Cardinality``) in C/C++ programming language, which outperforms the baseline, the [PSI-CA cryptography scheme](https://github.com/BatchClayderman/PSI-CA-ull). 
+This is the official simulation implementation of the OPSI-CA cryptography scheme (``PPCT: Privacy-Preserving Contact Tracing Using Concise Private Set Intersection Cardinality``) in C/C++ programming language, which outperforms the baseline, the [PSI-CA cryptography scheme](https://github.com/BatchClayderman/PSI-CA-ull), by optimizing the $\|OKVS\|$. 
 
 The datum type used is ``unsigned long long int`` (64-bit). The network communication is simulated by memory copying. 
 
@@ -10,7 +10,7 @@ This repository is a part of the [cryptography schemes](https://github.com/Batch
 
 For time consumption computation in or after September 2024, better time consumption computation can be done. 
 
-The recent period has witnessed the ``#include<chrono>`` reach a computation level of nanoseconds. Users can modify the time consumption computation codes in this repository to make more exact timing. 
+The recent period has witnessed the ``#include<chrono>`` reach a computation level of nanoseconds. Users can modify the time consumption computation codes in this repository to make the timing more exact.  
 
 The following codes may be useful for cross-platform universal improvements. 
 
@@ -53,3 +53,4 @@ If you wish to cite this work, please use the following BibTeX.
 ```
 
 Thank you for your citations. 
+
