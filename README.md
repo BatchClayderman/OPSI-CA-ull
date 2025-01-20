@@ -4,7 +4,7 @@ This is the official simulation implementation of the OPSI-CA cryptography schem
 
 The datum type used is ``unsigned long long int`` (64-bit). The network communication is simulated by memory copying. 
 
-This repository is a part of [the cryptography schemes](https://github.com/BatchClayderman/Cryptography-Schemes). 
+This repository is a part of the [cryptography schemes](https://github.com/BatchClayderman/Cryptography-Schemes). 
 
 ### Timing
 
